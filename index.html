@@ -45,15 +45,16 @@ opacity:.8;
 }
 
 /* HERO */
-.hero{
-display:grid;
-gap:3rem;
-align-items:center;
+.hero-buttons{
+display:flex;
+gap:16px;
+margin-top:20px;
 }
 
-@media(min-width:900px){
-.hero{
-grid-template-columns:1fr 1fr;
+@media(max-width:600px){
+.hero-buttons{
+flex-direction:column;
+align-items:center;
 }
 }
 
@@ -73,9 +74,16 @@ background:#f5f5f5;
 text-align:center;
 }
 
-.platforms span{
-margin:0 12px;
-font-weight:600;
+.platforms{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.platforms img{
+height:24px;
 opacity:.7;
 }
 
@@ -137,9 +145,10 @@ text-align:center;
 <p><strong>Independent label & digital distribution.</strong></p>
 <p>We support emerging artists and release music worldwide across all major platforms.</p>
 
-<a href="submit-demo.html" class="btn">Submit Demo</a>
-<a href="#features" class="btn outline">What we offer</a>
-</div>
+<div class="hero-buttons">
+<a class="btn">Submit Demo</a>
+<a class="btn outline">What we offer</a>
+  </div>
 
 <div>
 <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d" alt="Studio">
@@ -150,20 +159,19 @@ text-align:center;
 <section class="trust">
 <p><strong>Distributed to</strong></p>
 <div class="platforms">
-<span>Spotify</span>
-<span>Apple Music</span>
-<span>YouTube</span>
-<span>Amazon</span>
-<span>Deezer</span>
+  <img src="spotify.svg">
+  <img src="apple.svg">
+  <img src="youtube.svg">
+  <img src="amazon.svg">
+  <img src="deezer.svg">
+  <span class="more">+ More stores</span>
 </div>
-</section>
 
 <!-- ABOUT -->
 <section>
 <h2>About FUNK Records</h2>
 <p>
-FUNK Records is an independent label focused on phonk, electronic and experimental sounds.
-We work closely with artists, offering transparent agreements and fast releases.
+FUNK Records is an independent label. We work closely with artists, offering transparent agreements and fast releases.
 </p>
 </section>
 
