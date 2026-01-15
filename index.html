@@ -1,79 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Submit Demo – FUNK Records</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #111;
-      color: #fff;
-      line-height: 1.6;
-    }
-    section {
-      padding: 2rem;
-      max-width: 900px;
-      margin: auto;
-    }
-    h1 {
-      font-weight: 800;
-    }
-    ul {
-      margin-top: 1rem;
-    }
-    a {
-      color: #00BFFF;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .btn {
-      display: inline-block;
-      background: white !important;
-      color: black !important;
-      padding: 0.7rem 1.5rem;
-      border-radius: 5px;
-      margin-top: 1rem;
-      transition: background 0.3s;
-    }
-    .btn:hover {
-      background: #008ACF;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.8rem;
-      color: #aaa;
-    }
-  </style>
-</head>
-<body>
-  <section id="demo">
-  <h2>Submit Your Demo</h2>
-  <p>We’re open to hearing new, unique sounds that fit our vibe — Phonk, chill phonk, lo-fi, electronic, or experimental.</p>
-  <form action="https://formspree.io/f/mzzrkpqj" method="POST">
-    <label>Your Name</label><br>
-    <input type="text" name="name" required><br><br>
+<!DOCTYPE html>  <html lang="en">  <head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+  <meta name="google-site-verification" content="aRJkK1v-RDq6Crn086kau5WQJN5hOikSnNif_sxnV_c" />  
+  <title> FUNK Records</title>  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">  
+  <style>  
+    body {  
+      margin: 0;  
+      font-family: 'Inter', sans-serif;  
+      background-color: #111;  
+      color: #fff;  
+      line-height: 1.6;  
+    }  header,  
+section {  
+  padding: 2rem;  
+  max-width: 900px;  
+  margin: auto;  
+}  
 
-    <label>Your Email</label><br>
-    <input type="email" name="email" required><br><br>
+header {  
+  text-align: center;  
+  padding-top: 4rem;  
+  animation: fadeIn 1.5s ease-in-out;  
+}  
 
-    <label>Demo Link (SoundCloud, Dropbox etc.)</label><br>
-    <input type="url" name="demo-link" required><br><br>
+h1,  
+h2,  
+h3 {  
+  font-weight: 800;  
+}  
 
-    <label>Short Message (about you or the project)</label><br>
-    <textarea name="message" rows="4" required></textarea><br><br>
+a {  
+  color: #00BFFF;  
+  text-decoration: none;  
+}  
 
-    <button type="submit" class="btn">Send Demo</button>
-  </form>
-  <p><small>*We only accept private streaming links. No attachments.</small></p>
-</section>
-  <footer>
-    <p>&copy; 2026 FUNK Records. All rights reserved.</p>
-  </footer>
-</body>
-</html>
+a:hover {  
+  text-decoration: underline;  
+}  
+
+.btn {
+
+display: inline-block;
+background: white !important;
+color: black !important;
+padding: 0.7rem 1.5rem;
+border-radius: 5px;
+margin: 1rem 0.5rem;
+transition: background 0.3s;
+}
+
+.btn:hover {
+background: #f0f0f0;
+color: black;
+}
+
+@keyframes fadeIn {  
+  from {  
+    opacity: 0;  
+    transform: translateY(20px);  
+  }  
+
+  to {  
+    opacity: 1;  
+    transform: translateY(0);  
+  }  
+}  
+
+footer {  
+  text-align: center;  
+  padding: 2rem;  
+  font-size: 0.8rem;  
+  color: #aaa;  
+}  
+
+.menu-toggle {  
+  position: absolute;  
+  top: 20px;  
+  right: 20px;  
+  background: white !important;  
+  color: black !important;  
+  border: none;  
+  padding: 0.5rem 1rem;  
+  border-radius: 5px;  
+  cursor: pointer;  
+  z-index: 1001;  
+  font-size: 24px;  
+}  
+
+#mobile-menu {  
+  display: none;  
+  position: absolute;  
+  top: 0;  
+  right: 0;  
+  width: 250px;  
+  height: 100%;  
+  background: #222;  
+  padding: 2rem;  
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);  
+  z-index: 1000;  
+}  
+
+#mobile-menu ul {  
+  list-style: none;  
+  padding: 0;  
+}  
+
+#mobile-menu li {  
+  margin: 1rem 0;  
+}  
+
+#mobile-menu a {  
+  color: white;  
+  font-size: 18px;  
+}  
+
+#mobile-menu a:hover {  
+  text-decoration: underline;  
+}  
+
+/* Feature Grid Styling */  
+.feature-grid {  
+  background: linear-gradient(to bottom, #000, #1a1a1a);  
+  padding: 4rem 1rem;  
+  display: grid;  
+  gap: 2rem;  
+  grid-template-columns: 1fr;  
+}  
+
+@media (min-width: 768px) {  
+  .feature-grid {  
+    grid-template-columns: repeat(3, 1fr);  
+    padding: 4rem;  
+  }  
+}  
+
+.feature-card {  
+  background: rgba(255, 255, 255, 0.05);  
+  border: 1px solid rgba(255, 255, 255, 0.1);  
+  border-radius: 1rem;  
+  padding: 2rem;  
+  text-align: center;  
+  backdrop-filter: blur(10px);  
+}  
+
+.feature-card i {  
+  margin-bottom: 1rem;  
+}
+
+  </style>  
+</head>    <header>  
+    <p><strong>An independent record label.</strong></p>  
+    <a href="submit-demo.html" class="btn">Submit Your Demo</a>  
+  </header>    <!-- Features Grid Section -->    <section class="feature-grid">  
+    </div>  
+    <div class="feature-card">  
+      <i class="fas fa-globe text-4xl text-blue-400"></i>  
+      <h3 class="text-xl font-bold">Global Reach</h3>  
+      <p>Distribution to 150+ platforms worldwide</p>  
+    </div>  
+    <div class="feature-card">  
+      <i class="fas fa-bolt text-4xl text-blue-400"></i>  
+      <h3 class="text-xl font-bold">Fast Delivery</h3>  
+      <p>Guaranteed release within 72 hours</p>  
+    </div>  
+  </section>    <section id="legal">  
+    <h2>Legal & Copyright</h2>  
+    <p><strong>Label Name:</strong> FUNK Records</p>  
+    <p><strong>Founder:</strong> Albard Basumata</p>  
+    <p>All music, branding, and visual content on this site is created by or licensed to FUNK Records, or owned by the original artist(s) under agreement.</p>  
+    <p>By sending a demo, you confirm you're the legal rightsholder and authorize FUNK Records to review it. No rights are transferred unless both parties enter a signed agreement.</p>  
+    <p>“FUNK Records” is a trademark. Do not use it for marketing or reposting without permission.</p>  
+  </section>    <footer>  
+    <p>&copy; 2025 FUNK Records. All rights reserved.</p>  
+  </footer>    <script>  
+    function toggleMenu() {  
+      const menu = document.getElementById('mobile-menu');  
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';  
+    }  
+  
+    function closeMenu() {  
+      document.getElementById('mobile-menu').style.display = 'none';  
+    }  
+  
+    document.addEventListener('click', function (event) {  
+      const menu = document.getElementById('mobile-menu');  
+      const toggle = document.querySelector('.menu-toggle');  
+      if (!menu.contains(event.target) && !toggle.contains(event.target)) {  
+        menu.style.display = 'none';  
+      }  
+    });  
+  </script>  </body>  </html>
