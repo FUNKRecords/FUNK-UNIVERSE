@@ -1,223 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FUNK Records</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
-<style>
-*{box-sizing:border-box}
-
-body{
-margin:0;
-font-family:'Inter',sans-serif;
-background:#fff;
-color:#111;
-}
-
-/* GLOBAL */
-section{
-max-width:1100px;
-margin:auto;
-padding:4rem 2rem;
-}
-
-.btn{
-display:inline-block;
-padding:14px 32px;
-border-radius:4px;
-font-weight:600;
-border:2px solid #111;
-background:#111;
-color:#fff;
-transition:.3s;
-}
-
-.btn.outline{
-background:transparent;
-color:#111;
-}
-
-.btn:hover{
-opacity:.8;
-}
-
-/* HERO */
-.hero-buttons{
-display:flex;
-gap:16px;
-margin-top:20px;
-}
-
-@media(max-width:600px){
-.hero-buttons{
-flex-direction:column;
-align-items:center;
-}
-}
-
-.hero h1{
-font-size:3rem;
-margin-bottom:1rem;
-}
-
-.hero img{
-width:100%;
-border-radius:6px;
-}
-
-/* TRUST */
-.trust{
-background:#f5f5f5;
-text-align:center;
-}
-
-.platforms{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:20px;
-flex-wrap:wrap;
-}
-
-.platforms img{
-height:24px;
-opacity:.7;
-}
-
-/* FEATURES */
-.features{
-display:grid;
-gap:2rem;
-}
-
-@media(min-width:900px){
-.features{
-grid-template-columns:repeat(3,1fr);
-}
-}
-
-.card{
-border-top:2px solid #111;
-padding-top:1.5rem;
-}
-
-/* PROCESS */
-.process{
-display:grid;
-gap:1.5rem;
-}
-
-.step{
-display:flex;
-gap:1rem;
-}
-
-.step span{
-font-weight:800;
-}
-
-/* CTA */
-.cta{
-background:#111;
-color:#fff;
-text-align:center;
-}
-
-/* FOOTER */
-footer{
-background:#f5f5f5;
-padding:2rem;
-font-size:.85rem;
-text-align:center;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit Demo – FUNK Records</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #111;
+      color: #fff;
+      line-height: 1.6;
+    }
+    section {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1 {
+      font-weight: 800;
+    }
+    ul {
+      margin-top: 1rem;
+    }
+    a {
+      color: #00BFFF;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .btn {
+      display: inline-block;
+      background: white !important;
+      color: black !important;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      margin-top: 1rem;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #008ACF;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+  </style>
 </head>
-
 <body>
+  <section id="demo">
+  <h2>Submit Your Demo</h2>
+  <p>We’re open to hearing new, unique sounds that fit our vibe — Phonk, chill phonk, lo-fi, electronic, or experimental.</p>
+  <form action="https://formspree.io/f/mzzrkpqj" method="POST">
+    <label>Your Name</label><br>
+    <input type="text" name="name" required><br><br>
 
-<!-- HERO -->
-<section class="hero">
-<div>
-<h1>FUNK Records</h1>
-<p><strong>Independent label & digital distribution.</strong></p>
-<p>We support emerging artists and release music worldwide across all major platforms.</p>
+    <label>Your Email</label><br>
+    <input type="email" name="email" required><br><br>
 
-<div class="hero-buttons">
-<a class="btn">Submit Demo</a>
-<a class="btn outline">What we offer</a>
-  </div>
+    <label>Demo Link (SoundCloud, Dropbox etc.)</label><br>
+    <input type="url" name="demo-link" required><br><br>
 
-<div>
-<img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d" alt="Studio">
-</div>
+    <label>Short Message (about you or the project)</label><br>
+    <textarea name="message" rows="4" required></textarea><br><br>
+
+    <button type="submit" class="btn">Send Demo</button>
+  </form>
+  <p><small>*We only accept private streaming links. No attachments.</small></p>
 </section>
-
-<!-- TRUST -->
-<section class="trust">
-<p><strong>Distributed to</strong></p>
-<div class="platforms">
-  <img src="spotify.svg">
-  <img src="apple.svg">
-  <img src="youtube.svg">
-  <img src="amazon.svg">
-  <img src="deezer.svg">
-  <span class="more">+ More stores</span>
-</div>
-
-<!-- ABOUT -->
-<section>
-<h2>About FUNK Records</h2>
-<p>
-FUNK Records is an independent label. We work closely with artists, offering transparent agreements and fast releases.
-</p>
-</section>
-
-<!-- FEATURES -->
-<section id="features" class="features">
-
-<div class="card">
-<h3>Global Distribution</h3>
-<p>Your music delivered to 150+ stores worldwide.</p>
-</div>
-
-<div class="card">
-<h3>Fast Release</h3>
-<p>Get your track live within 72 hours.</p>
-</div>
-
-<div class="card">
-<h3>Artist Friendly</h3>
-<p>Fair agreements and full creative control.</p>
-</div>
-
-</section>
-
-<!-- PROCESS -->
-<section>
-<h2>How it works</h2>
-
-<div class="process">
-<div class="step"><span>01.</span> Submit your demo</div>
-<div class="step"><span>02.</span> Review & feedback</div>
-<div class="step"><span>03.</span> Agreement</div>
-<div class="step"><span>04.</span> Release & distribution</div>
-<div class="step"><span>05.</span> Promotion</div>
-</div>
-</section>
-
-<!-- CTA -->
-<section class="cta">
-<h2>Ready to release your music?</h2>
-<a href="submit-demo.html" class="btn outline">Submit Demo</a>
-</section>
-
-<footer>
-<p>© 2026 FUNK Records</p>
-<p>Founder: Albard Basumata</p>
-</footer>
-
+  <footer>
+    <p>&copy; 2026 FUNK Records. All rights reserved.</p>
+  </footer>
 </body>
-  </html>
+</html>
