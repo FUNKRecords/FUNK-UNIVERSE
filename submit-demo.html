@@ -1,77 +1,184 @@
-<!DOCTYPE html>  <html lang="en">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
-  <title>Submit Demo – FUNK UNIVERSE</title>  
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">  
-  <style>  
-    body {  
-      margin: 0;  
-      font-family: 'Inter', sans-serif;  
-      background-color: #111;  
-      color: #fff;  
-      line-height: 1.6;  
-    }  
-    section {  
-      padding: 2rem;  
-      max-width: 900px;  
-      margin: auto;  
-    }  
-    h1 {  
-      font-weight: 800;  
-    }  
-    ul {  
-      margin-top: 1rem;  
-    }  
-    a {  
-      color: #00BFFF;  
-      text-decoration: none;  
-    }  
-    a:hover {  
-      text-decoration: underline;  
-    }  
-    .btn {  
-      display: inline-block;  
-      background: white !important;  
-      color: black !important;  
-      padding: 0.7rem 1.5rem;  
-      border-radius: 5px;  
-      margin-top: 1rem;  
-      transition: background 0.3s;  
-    }  
-    .btn:hover {  
-      background: #008ACF;  
-    }  
-    footer {  
-      text-align: center;  
-      padding: 2rem;  
-      font-size: 0.8rem;  
-      color: #aaa;  
-    }  
-  </style>  
-</head>  
-<body>  
-  <section id="demo">  
-  <h2>Submit Your Demo</h2>  
-  <p>We’re open to hearing new unique sounds that fit our vibe — Brazilian Funk, Phonk, chill phonk, lofi, electronic, or experimental.</p>  
-  <form action="https://formspree.io/f/mzzrkpqj" method="POST">  
-    <label>Your Artist Name With Your Real Name</label><br>  
-    <input type="text" name="name" required><br><br>  <label>Your Email</label><br>  
-<input type="email" name="email" required><br><br>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit Demo – FUNK UNIVERSE</title>
 
-<label>Demo Link (SoundCloud, Dropbox etc.)</label><br>  
-<input type="url" name="demo-link" required><br><br>  
+  <!-- SAME FONTS AS MAIN SITE -->
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
 
-<label>Short Message (about you or the project)</label><br>  
-<textarea name="message" rows="4" required></textarea><br><br>  
+  <style>
+    :root {
+      --bg: #060606;
+      --surface: #0e0e0e;
+      --line: rgba(255,255,255,0.08);
+      --white: #f0ede8;
+      --muted: #666;
+      --font-h: 'Barlow Condensed', sans-serif;
+      --font-b: 'Barlow', sans-serif;
+    }
 
-<button type="submit" class="btn">Send Demo</button>
+    * { margin:0; padding:0; box-sizing:border-box; }
 
-  </form>  
-  <p><small>*We only accept private streaming links. No attachments.</small></p>  
-</section>  
-  <footer>  
-    <p>&copy; 2026 FUNK UNIVERSE. All rights reserved.</p>  
-  </footer>  
-</body>  
-                                                       </html>
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-b);
+    }
+
+    /* NAV (simple version) */
+    nav {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--font-h);
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* MAIN SECTION */
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 4rem 1.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-h);
+      font-size: clamp(2.2rem, 5vw, 3rem);
+      letter-spacing: .05em;
+      margin-bottom: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .desc {
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    /* FORM */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    label {
+      font-family: var(--font-h);
+      font-size: .7rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .4rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--line);
+      padding: .9rem 0;
+      color: var(--white);
+      font-size: .95rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--white);
+    }
+
+    textarea {
+      resize: none;
+      min-height: 120px;
+    }
+
+    /* BUTTON */
+    .btn {
+      margin-top: 1rem;
+      background: var(--white);
+      color: var(--bg);
+      border: none;
+      padding: 1rem;
+      font-family: var(--font-h);
+      font-size: .8rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(255,255,255,.1);
+    }
+
+    .note {
+      margin-top: 1.5rem;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--line);
+      font-family: var(--font-h);
+      font-size: .6rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>FUNK UNIVERSE</nav>
+
+  <div class="container">
+    <h1>Submit Your Demo</h1>
+    <p class="desc">
+      We’re open to hearing new unique sounds that fit our vibe — Brazilian Funk, Phonk, chill phonk, lofi, electronic, or experimental.
+    </p>
+
+    <form action="https://formspree.io/f/mzzrkpqj" method="POST">
+
+      <div>
+        <label>Artist Name & Real Name</label>
+        <input type="text" name="name" required>
+      </div>
+
+      <div>
+        <label>Email</label>
+        <input type="email" name="email" required>
+      </div>
+
+      <div>
+        <label>Demo Link</label>
+        <input type="url" name="demo-link" required>
+      </div>
+
+      <div>
+        <label>Message</label>
+        <textarea name="message" required></textarea>
+      </div>
+
+      <button type="submit" class="btn">Send Demo</button>
+
+    </form>
+
+    <p class="note">
+      *We only accept private streaming links. No attachments.
+    </p>
+  </div>
+
+  <footer>
+    © 2026 FUNK UNIVERSE. All rights reserved.
+  </footer>
+
+</body>
+</html>
