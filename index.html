@@ -12,7 +12,7 @@
       --paper: #f2ede6;
       --red: #b01c1c;
       --rule: rgba(242,237,230,0.08);
-      --font-display: 'Arial Black', 'Arial Bold', Impact, sans-serif;
+      --font-display: Impact, 'Arial Black', 'Arial Bold', sans-serif;
       --font-body: Georgia, 'Times New Roman', serif;
       --font-mono: 'Courier New', Courier, monospace;
     }
@@ -378,10 +378,7 @@
     .legal-row {
       display: grid; grid-template-columns: 150px 1fr; gap: 2rem;
       padding: 1.4rem 0; border-bottom: 1px solid var(--rule);
-      opacity: 0; transform: translateY(10px);
-      transition: opacity 0.5s, transform 0.5s;
     }
-    .legal-row.visible { opacity: 1; transform: translateY(0); }
 
     .legal-key {
       font-family: var(--font-mono); font-size: 0.58rem;
@@ -551,4 +548,9 @@
 <script>
   // ── Custom cursor ──
   const cursor = document.getElementById('cursor');
-  document.addEventListener('mousem
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  document.querySelectorAll('a,button').forEach(el => {
+ 
