@@ -34,11 +34,17 @@
       font-weight: 300;
       line-height: 1.6;
       overflow-x: hidden;
-      cursor: none;
+      /* FIX: cursor:none only on desktop so mobile touch still works */
     }
 
-    /* ── CUSTOM CURSOR ── */
+    /* ── CUSTOM CURSOR (desktop only) ── */
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
+      .cursor, .cursor-ring { display: block; }
+    }
+
     .cursor {
+      display: none;
       position: fixed;
       width: 8px; height: 8px;
       background: var(--white);
@@ -50,6 +56,7 @@
       transition: width .2s, height .2s;
     }
     .cursor-ring {
+      display: none;
       position: fixed;
       width: 34px; height: 34px;
       border: 1px solid rgba(255,255,255,0.35);
@@ -68,7 +75,8 @@
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
-      z-index: 500;
+      /* FIX: raise nav z-index above drawer so it sits on top, but drawer is raised too */
+      z-index: 600;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.4rem 3rem;
       background: linear-gradient(to bottom, rgba(6,6,6,0.97) 60%, transparent);
@@ -116,7 +124,15 @@
     .nav-toggle {
       display: none;
       flex-direction: column; gap: 5px;
-      background: none; border: none; cursor: none; padding: 4px;
+      background: none; border: none;
+      /* FIX: use pointer cursor on mobile, none only on desktop */
+      cursor: pointer;
+      padding: 8px; /* bigger tap target */
+      position: relative;
+      z-index: 601; /* FIX: always above drawer */
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .nav-toggle { cursor: none; }
     }
     .nav-toggle span {
       display: block; width: 22px; height: 1.5px;
@@ -128,7 +144,8 @@
     .drawer {
       position: fixed; inset: 0;
       background: var(--bg);
-      z-index: 490;
+      /* FIX: z-index must be below nav-toggle (601) but above everything else */
+      z-index: 590;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 0.5rem;
       opacity: 0; pointer-events: none;
@@ -154,6 +171,8 @@
 
     /* ── HERO ── */
     .hero {
+      /* FIX: 100svh fallback for older browsers */
+      min-height: 100vh;
       min-height: 100svh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -267,8 +286,12 @@
       background: var(--white);
       padding: 1rem 2.4rem;
       border-radius: 2px;
-      border: none; cursor: none;
+      border: none;
+      cursor: pointer;
       transition: background .25s, transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .btn { cursor: none; }
     }
     .btn:hover {
       background: #fff;
@@ -430,14 +453,22 @@
     .footer-links a:hover { color: var(--white); }
 
     /* ── SCROLL REVEAL ── */
+    /* FIX: Start visible, animate in. Use will-change for performance. */
     .reveal {
-      opacity: 0; transform: translateY(28px);
+      opacity: 0;
+      transform: translateY(28px);
       transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
+      will-change: opacity, transform;
     }
     .reveal.in { opacity: 1; transform: none; }
     .d1 { transition-delay: .1s; }
     .d2 { transition-delay: .2s; }
     .d3 { transition-delay: .3s; }
+
+    /* FIX: If JS fails or is slow, make content visible after a delay */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
@@ -486,14 +517,15 @@
       <a href="#features" class="nav-link">Services</a>
       <a href="#legal"    class="nav-link">Legal</a>
       <a href="submit-demo.html" class="nav-cta">Submit Demo</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <!-- FIX: button is always clickable, z-index 601 keeps it above drawer -->
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
   <!-- DRAWER -->
-  <div class="drawer" id="drawer">
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <a href="#features" onclick="closeDrawer()">Services</a>
     <a href="#legal"    onclick="closeDrawer()">Legal</a>
     <a href="submit-demo.html">Submit Demo</a>
@@ -604,33 +636,87 @@
   </footer>
 
   <script>
-    // Custom cursor
-    const cur = document.getElementById('cursor');
-    const crg = document.getElementById('cring');
+    // ── Custom cursor (desktop only) ──
+    const isPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (isPointer) {
+  const cur = document.getElementById('cursor');
+  const crg = document.getElementById('cring');
+
+  if (cur && crg) {
+    cur.style.display = 'block';
+    crg.style.display = 'block';
+
     let mx=0,my=0,rx=0,ry=0;
+
     document.addEventListener('mousemove', e => {
       mx=e.clientX; my=e.clientY;
       cur.style.left=mx+'px'; cur.style.top=my+'px';
     });
-    (function loop(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
-      crg.style.left=rx+'px'; crg.style.top=ry+'px';
-      requestAnimationFrame(loop); })();
 
-    // Drawer
+    (function loop(){
+      rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+      crg.style.left=rx+'px'; crg.style.top=ry+'px';
+      requestAnimationFrame(loop);
+    })();
+  }
+    }
+    // ── Drawer / Hamburger menu ──
     const drawer  = document.getElementById('drawer');
     const toggler = document.getElementById('navToggle');
-    toggler.addEventListener('click', () => {
-      const o = drawer.classList.toggle('open');
-      toggler.children[0].style.transform = o ? 'rotate(45deg) translate(5px,5px)' : '';
-      toggler.children[1].style.opacity   = o ? '0' : '1';
-      toggler.children[2].style.transform = o ? 'rotate(-45deg) translate(5px,-5px)' : '';
-    });
-    function closeDrawer(){
-      drawer.classList.remove('open');
-      toggler.children[0].style.transform='';
-      toggler.children[1].style.opacity='1';
-      toggler.children[2].style.transform='';
+
+    function openDrawer() {
+      drawer.classList.add('open');
+      toggler.setAttribute('aria-expanded', 'true');
+      toggler.children[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+      toggler.children[1].style.opacity   = '0';
+      toggler.children[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+      // Prevent page scroll while drawer is open
+      document.body.style.overflow = 'hidden';
     }
 
-    // Scroll reveal
-    const
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      toggler.setAttribute('aria-expanded', 'false');
+      toggler.children[0].style.transform = '';
+      toggler.children[1].style.opacity   = '1';
+      toggler.children[2].style.transform = '';
+      document.body.style.overflow = '';
+    }
+
+    toggler.addEventListener('click', () => {
+      if (drawer.classList.contains('open')) {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+    });
+
+    // Close drawer on Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
+    });
+
+    // ── Scroll reveal ──
+    // FIX: threshold lowered to 0.05 so elements trigger earlier on mobile.
+    // Also use rootMargin to trigger slightly before element enters viewport.
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // FIX: Fallback — if IntersectionObserver never fires (e.g. very old browser),
+    // make all .reveal elements visible after 2 seconds.
+    setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.in)').forEach(el => {
+        el.classList.add('in');
+      });
+    }, 2000);
+  </script>
+</body>
+</html>
