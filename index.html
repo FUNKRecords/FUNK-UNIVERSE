@@ -723,5 +723,27 @@
       });
     }, 2000);
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function(){
+  emailjs.init(n0VPNf5P4M6yJN_iK);
+})();
+
+document.getElementById("demoForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  emailjs.send("service_1nxlw2b", "template_onupech", {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    track: document.getElementById("track").value
+  })
+  .then(function() {
+    alert("Demo submitted successfully! Check your email.");
+  }, function() {
+    alert("Something went wrong. Try again.");
+  });
+});
+</script>
 </body>
 </html>
