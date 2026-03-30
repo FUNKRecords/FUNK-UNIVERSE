@@ -68,6 +68,7 @@
       text-transform: uppercase;
       color: var(--muted);
       margin-bottom: .4rem;
+      display: block;
     }
 
     input, textarea {
@@ -102,18 +103,47 @@
       letter-spacing: .2em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: transform .2s, box-shadow .2s;
+      transition: transform .2s, box-shadow .2s, opacity .2s;
     }
 
-    .btn:hover {
+    .btn:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 0 12px 40px rgba(255,255,255,.1);
+    }
+
+    .btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
     }
 
     .note {
       margin-top: 1.5rem;
       font-size: .8rem;
       color: var(--muted);
+    }
+
+    /* Success / Error message */
+    .msg {
+      display: none;
+      margin-top: 1.5rem;
+      padding: 1rem 1.2rem;
+      font-family: var(--font-h);
+      font-size: .8rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      border: 1px solid var(--line);
+    }
+
+    .msg.success {
+      display: block;
+      border-color: rgba(255,255,255,.25);
+      color: var(--white);
+    }
+
+    .msg.error {
+      display: block;
+      border-color: rgba(255,80,80,.4);
+      color: #ff6060;
     }
 
     footer {
@@ -136,35 +166,36 @@
   <div class="container">
     <h1>Submit Your Demo</h1>
     <p class="desc">
-      We’re open to hearing new unique sounds that fit our vibe — Brazilian Funk, Phonk, chill phonk, lofi, electronic, or experimental.
+      We're open to hearing new unique sounds that fit our vibe — Brazilian Funk, Phonk, chill phonk, lofi, electronic, or experimental.
     </p>
 
-    <!-- ✅ FORM (Formspree + EmailJS) -->
-    <form action="https://formspree.io/f/mzzrkpqj" method="POST" id="demoForm">
+    <form id="demoForm">
 
       <div>
-        <label>Artist Name & Real Name</label>
+        <label for="name">Artist Name & Real Name</label>
         <input type="text" name="name" id="name" required>
       </div>
 
       <div>
-        <label>Email</label>
+        <label for="email">Email</label>
         <input type="email" name="email" id="email" required>
       </div>
 
       <div>
-        <label>Demo Link</label>
+        <label for="track">Demo Link</label>
         <input type="url" name="demo-link" id="track" required>
       </div>
 
       <div>
-        <label>Message</label>
+        <label for="message">Message</label>
         <textarea name="message" id="message" required></textarea>
       </div>
 
-      <button type="submit" class="btn">Send Demo</button>
+      <button type="submit" class="btn" id="submitBtn">Send Demo</button>
 
     </form>
+
+    <div class="msg" id="statusMsg"></div>
 
     <p class="note">
       *We only accept private streaming links. No attachments.
@@ -175,27 +206,77 @@
     © 2026 FUNK UNIVERSE. All rights reserved.
   </footer>
 
-  <!-- ✅ EMAILJS -->
+  <!-- EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
   <script>
-(function(){
-  emailjs.init("n0VPNf5P4M6yJN_iK");
-})();
+    // ── Init EmailJS ──────────────────────────────────────────
+    (function () {
+      emailjs.init("n0VPNf5P4M6yJN_iK");
+    })();
 
-document.getElementById("demoForm").addEventListener("submit", function() {
+    // ── Form Submit ───────────────────────────────────────────
+    document.getElementById("demoForm").addEventListener("submit", function (e) {
+      e.preventDefault(); // Stop native form reload
 
-  const data = {
-    name: document.getElementById("name").value,
-    email: document.getElementById("email").value,
-    track: document.getElementById("track").value,
-    message: document.getElementById("message").value
-  };
+      const btn       = document.getElementById("submitBtn");
+      const statusMsg = document.getElementById("statusMsg");
 
-  // ✅ Auto reply to artist
-  emailjs.send("service_1nxlw2b", "template_onupech", data);
+      // Grab values
+      const name    = document.getElementById("name").value.trim();
+      const email   = document.getElementById("email").value.trim();
+      const track   = document.getElementById("track").value.trim();
+      const message = document.getElementById("message").value.trim();
 
-});
+      // Disable button while processing
+      btn.disabled   = true;
+      btn.textContent = "Sending…";
+      statusMsg.className = "msg";
+      statusMsg.textContent = "";
+
+      const templateData = {
+        name:    name,
+        email:   email,
+        track:   track,
+        message: message
+      };
+
+      // ── STEP 1: EmailJS auto-reply to artist ─────────────────
+      emailjs.send("service_1nxlw2b", "template_onupech", templateData)
+        .then(function () {
+
+          // ── STEP 2: Formspree — stores submission & emails you ──
+          return fetch("https://formspree.io/f/mzzrkpqj", {
+            method: "POST",
+            headers: { "Accept": "application/json" },
+            body: new FormData(document.getElementById("demoForm"))
+          });
+
+        })
+        .then(function (res) {
+
+          if (res.ok) {
+            // ✅ Both succeeded
+            statusMsg.className   = "msg success";
+            statusMsg.textContent = "Demo received! Check your email for confirmation.";
+            document.getElementById("demoForm").reset();
+          } else {
+            // Formspree failed
+            throw new Error("Formspree submission failed.");
+          }
+
+        })
+        .catch(function (err) {
+          console.error(err);
+          statusMsg.className   = "msg error";
+          statusMsg.textContent = "Something went wrong. Please try again or contact us directly.";
+        })
+        .finally(function () {
+          btn.disabled    = false;
+          btn.textContent = "Send Demo";
+        });
+
+    });
   </script>
 
 </body>
