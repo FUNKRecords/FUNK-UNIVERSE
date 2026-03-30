@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Submit Demo – FUNK UNIVERSE</title>
 
-  <!-- SAME FONTS AS MAIN SITE -->
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
 
   <style>
@@ -27,7 +26,6 @@
       font-family: var(--font-b);
     }
 
-    /* NAV (simple version) */
     nav {
       padding: 1.5rem 2rem;
       border-bottom: 1px solid var(--line);
@@ -37,7 +35,6 @@
       color: var(--muted);
     }
 
-    /* MAIN SECTION */
     .container {
       max-width: 700px;
       margin: auto;
@@ -58,7 +55,6 @@
       line-height: 1.7;
     }
 
-    /* FORM */
     form {
       display: flex;
       flex-direction: column;
@@ -95,7 +91,6 @@
       min-height: 120px;
     }
 
-    /* BUTTON */
     .btn {
       margin-top: 1rem;
       background: var(--white);
@@ -121,7 +116,6 @@
       color: var(--muted);
     }
 
-    /* FOOTER */
     footer {
       text-align: center;
       padding: 2rem;
@@ -145,26 +139,27 @@
       We’re open to hearing new unique sounds that fit our vibe — Brazilian Funk, Phonk, chill phonk, lofi, electronic, or experimental.
     </p>
 
-    <form action="https://formspree.io/f/mzzrkpqj" method="POST">
+    <!-- ✅ FORM (Formspree + EmailJS) -->
+    <form action="https://formspree.io/f/mzzrkpqj" method="POST" id="demoForm">
 
       <div>
         <label>Artist Name & Real Name</label>
-        <input type="text" name="name" required>
+        <input type="text" name="name" id="name" required>
       </div>
 
       <div>
         <label>Email</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email" id="email" required>
       </div>
 
       <div>
         <label>Demo Link</label>
-        <input type="url" name="demo-link" required>
+        <input type="url" name="demo-link" id="track" required>
       </div>
 
       <div>
         <label>Message</label>
-        <textarea name="message" required></textarea>
+        <textarea name="message" id="message" required></textarea>
       </div>
 
       <button type="submit" class="btn">Send Demo</button>
@@ -179,6 +174,29 @@
   <footer>
     © 2026 FUNK UNIVERSE. All rights reserved.
   </footer>
+
+  <!-- ✅ EMAILJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <script>
+(function(){
+  emailjs.init("n0VPNf5P4M6yJN_iK");
+})();
+
+document.getElementById("demoForm").addEventListener("submit", function() {
+
+  const data = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    track: document.getElementById("track").value,
+    message: document.getElementById("message").value
+  };
+
+  // ✅ Auto reply to artist
+  emailjs.send("service_1nxlw2b", "template_onupech", data);
+
+});
+  </script>
 
 </body>
 </html>
