@@ -747,6 +747,13 @@ Applications are reviewed based on clarity, intent, and long-term vision — not
         longTermGoal: document.getElementById('longTermGoal').value,
       };
 
+        if (!params.fullName || !params.email || !params.country || !params.labelName) {
+    alert("Please complete all required fields.");
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
+    btn.disabled = false;
+    return;
+        }
+
       emailjs.send('service_1nxlw2b', 'template_2to2ts6', params)
         .then(() => {
           document.getElementById('successOverlay').classList.add('show');
