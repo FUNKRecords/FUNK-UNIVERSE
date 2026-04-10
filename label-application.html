@@ -175,12 +175,17 @@
       position: relative; z-index: 1;
     }
     .panel-note {
-      margin-top: 2rem;
-      font-family: var(--font-h); font-size: .6rem;
-      letter-spacing: .25em; text-transform: uppercase;
-      color: var(--muted); opacity: .4;
-      position: relative; z-index: 1;
-    }
+  margin-top: 2rem;
+  margin-bottom: 2rem; /* ADD THIS */
+  font-family: var(--font-h);
+  font-size: .6rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: .4;
+  position: relative;
+  z-index: 1;
+}
 
     /* progress dots */
     .progress-dots {
@@ -515,7 +520,7 @@
         <span></span>
       </div>
       <h1 class="panel-title">Label Setup<br>Application</h1>
-      <p class="panel-note" style="margin-top:1rem;">
+      <p class="panel-note" style="margin-top:1rem; margin-bottom:2rem;">
 Applications are reviewed based on clarity, intent, and long term vision. Not all submissions are accepted.
       </p>
 
