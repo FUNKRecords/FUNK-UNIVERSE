@@ -1,5 +1,12 @@
 (function () {
   var COOKIE_KEY = 'fu_cookie_consent';
+
+  // ── On page load: if already accepted, load tracking scripts ──
+  if (localStorage.getItem(COOKIE_KEY) === 'accepted') {
+    loadTrackingScripts();
+  }
+
+  // Already answered — don't show banner
   if (localStorage.getItem(COOKIE_KEY)) return;
 
   // ── Inject styles ──
@@ -109,11 +116,11 @@
   banner.setAttribute('aria-label', 'Cookie consent');
   banner.innerHTML = `
     <div class="fu-cookie-text">
-      <span class="fu-cookie-title">Cookies</span>
+      <span class="fu-cookie-title">Funk Universe — Cookies</span>
       <span class="fu-cookie-desc">
         We use cookies to ensure basic functionality and improve your experience.
         By continuing, you agree to our use of cookies.
-        <a href="#legal">Learn more</a>
+        <a href="/privacy.html">Learn more</a>
       </span>
     </div>
     <div class="fu-cookie-actions">
@@ -128,20 +135,53 @@
     banner.classList.add('show');
   }, 1200);
 
-  // ── Buttons ──
+  // ── Auto-hide after 10 seconds if no action ──
+  setTimeout(function () {
+    if (!localStorage.getItem(COOKIE_KEY)) {
+      hideBanner();
+    }
+  }, 10000);
+
+  // ── Hide banner ──
   function hideBanner() {
     banner.style.transform = 'translateX(-50%) translateY(120%)';
     banner.style.opacity = '0';
-    setTimeout(function () { banner.remove(); }, 600);
+    setTimeout(function () {
+      if (banner.parentNode) banner.remove();
+    }, 600);
   }
 
+  // ── Load tracking scripts only after Accept ──
+  function loadTrackingScripts() {
+    // Uncomment and add your analytics here when ready:
+    // var ga = document.createElement('script');
+    // ga.src = 'https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID';
+    // ga.async = true;
+    // document.head.appendChild(ga);
+  }
+
+  // ── Accept ──
   document.getElementById('fuCookieAccept').addEventListener('click', function () {
     localStorage.setItem(COOKIE_KEY, 'accepted');
+    loadTrackingScripts();
     hideBanner();
   });
 
+  // ── Decline ──
   document.getElementById('fuCookieDecline').addEventListener('click', function () {
     localStorage.setItem(COOKIE_KEY, 'declined');
     hideBanner();
   });
+
+})();
+
+// ── Load tracking if already accepted on previous visit ──
+(function () {
+  if (localStorage.getItem('fu_cookie_consent') === 'accepted') {
+    // Uncomment when you add analytics:
+    // var ga = document.createElement('script');
+    // ga.src = 'https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID';
+    // ga.async = true;
+    // document.head.appendChild(ga);
+  }
 })();
