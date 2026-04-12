@@ -1,0 +1,146 @@
+<!-- FUNK UNIVERSE — Cookie Consent Banner -->
+<!-- Drop this before </body> on every page -->
+
+<style>
+  .fu-cookie {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    z-index: 9000;
+    width: min(680px, calc(100vw - 2rem));
+    background: #0e0e0e;
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 3px;
+    padding: 1.6rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    transition: transform .6s cubic-bezier(.16,1,.3,1), opacity .6s;
+    opacity: 0;
+    box-shadow: 0 24px 80px rgba(0,0,0,.8);
+  }
+  .fu-cookie.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  .fu-cookie-text {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    flex: 1;
+    min-width: 200px;
+  }
+  .fu-cookie-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: .72rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: #f0ede8;
+  }
+  .fu-cookie-desc {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    font-size: .78rem;
+    color: #555;
+    line-height: 1.6;
+  }
+  .fu-cookie-desc a {
+    color: #888;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color .2s;
+  }
+  .fu-cookie-desc a:hover { color: #f0ede8; }
+  .fu-cookie-actions {
+    display: flex;
+    gap: .7rem;
+    flex-shrink: 0;
+  }
+  .fu-cookie-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: .68rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 2px;
+    padding: .65rem 1.4rem;
+    cursor: pointer;
+    transition: background .2s, transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s;
+  }
+  @media (hover: hover) and (pointer: fine) { .fu-cookie-btn { cursor: none; } }
+  .fu-cookie-accept {
+    background: #f0ede8;
+    color: #060606;
+  }
+  .fu-cookie-accept:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,255,255,.1);
+  }
+  .fu-cookie-decline {
+    background: transparent;
+    color: #555;
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .fu-cookie-decline:hover {
+    color: #f0ede8;
+    border-color: rgba(255,255,255,.2);
+  }
+
+  @media (max-width: 480px) {
+    .fu-cookie { padding: 1.4rem; gap: 1.2rem; bottom: 1rem; }
+    .fu-cookie-actions { width: 100%; }
+    .fu-cookie-btn { flex: 1; justify-content: center; }
+  }
+</style>
+
+<div class="fu-cookie" id="fuCookie" role="dialog" aria-label="Cookie consent">
+  <div class="fu-cookie-text">
+    <span class="fu-cookie-title">Cookies</span>
+    <span class="fu-cookie-desc">
+      We use cookies to ensure basic functionality and improve your experience.
+      By continuing, you agree to our use of cookies.
+      <a href="index.html#legal">Learn more</a>
+    </span>
+  </div>
+  <div class="fu-cookie-actions">
+    <button class="fu-cookie-btn fu-cookie-decline" id="fuCookieDecline">Decline</button>
+    <button class="fu-cookie-btn fu-cookie-accept" id="fuCookieAccept">Accept</button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var COOKIE_KEY = 'fu_cookie_consent';
+    var banner     = document.getElementById('fuCookie');
+
+    // Already answered — don't show
+    if (localStorage.getItem(COOKIE_KEY)) return;
+
+    // Show after short delay
+    setTimeout(function() {
+      banner.classList.add('show');
+    }, 1200);
+
+    document.getElementById('fuCookieAccept').addEventListener('click', function() {
+      localStorage.setItem(COOKIE_KEY, 'accepted');
+      hideBanner();
+    });
+
+    document.getElementById('fuCookieDecline').addEventListener('click', function() {
+      localStorage.setItem(COOKIE_KEY, 'declined');
+      hideBanner();
+    });
+
+    function hideBanner() {
+      banner.style.transform = 'translateX(-50%) translateY(120%)';
+      banner.style.opacity   = '0';
+      setTimeout(function() { banner.style.display = 'none'; }, 600);
+    }
+  })();
+</script>
