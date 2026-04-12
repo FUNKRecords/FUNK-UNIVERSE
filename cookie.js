@@ -1,13 +1,36 @@
 (function () {
   var COOKIE_KEY = 'fu_cookie_consent';
 
-  // ── On page load: if already accepted, load tracking scripts ──
-  if (localStorage.getItem(COOKIE_KEY) === 'accepted') {
+  // ── Storage: localStorage with document.cookie fallback ──
+  // Needed because Instagram in-app browser blocks localStorage
+  function saveConsent(value) {
+    try {
+      localStorage.setItem(COOKIE_KEY, value);
+    } catch(e) {}
+    // Always also set as a real cookie (works in Instagram browser)
+    var expires = new Date();
+    expires.setFullYear(expires.getFullYear() + 1);
+    document.cookie = COOKIE_KEY + '=' + value + '; expires=' + expires.toUTCString() + '; path=/; SameSite=Lax';
+  }
+
+  function getConsent() {
+    // Try localStorage first
+    try {
+      var ls = localStorage.getItem(COOKIE_KEY);
+      if (ls) return ls;
+    } catch(e) {}
+    // Fallback to document.cookie
+    var match = document.cookie.match(new RegExp('(?:^|; )' + COOKIE_KEY + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : null;
+  }
+
+  // ── Load tracking if already accepted on previous visit ──
+  if (getConsent() === 'accepted') {
     loadTrackingScripts();
   }
 
   // Already answered — don't show banner
-  if (localStorage.getItem(COOKIE_KEY)) return;
+  if (getConsent()) return;
 
   // ── Inject styles ──
   var style = document.createElement('style');
@@ -137,7 +160,7 @@
 
   // ── Auto-hide after 10 seconds if no action ──
   setTimeout(function () {
-    if (!localStorage.getItem(COOKIE_KEY)) {
+    if (!getConsent()) {
       hideBanner();
     }
   }, 10000);
@@ -153,7 +176,7 @@
 
   // ── Load tracking scripts only after Accept ──
   function loadTrackingScripts() {
-    // Uncomment and add your analytics here when ready:
+    // Uncomment when you add Google Analytics:
     // var ga = document.createElement('script');
     // ga.src = 'https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID';
     // ga.async = true;
@@ -162,26 +185,15 @@
 
   // ── Accept ──
   document.getElementById('fuCookieAccept').addEventListener('click', function () {
-    localStorage.setItem(COOKIE_KEY, 'accepted');
+    saveConsent('accepted');
     loadTrackingScripts();
     hideBanner();
   });
 
   // ── Decline ──
   document.getElementById('fuCookieDecline').addEventListener('click', function () {
-    localStorage.setItem(COOKIE_KEY, 'declined');
+    saveConsent('declined');
     hideBanner();
   });
 
-})();
-
-// ── Load tracking if already accepted on previous visit ──
-(function () {
-  if (localStorage.getItem('fu_cookie_consent') === 'accepted') {
-    // Uncomment when you add analytics:
-    // var ga = document.createElement('script');
-    // ga.src = 'https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID';
-    // ga.async = true;
-    // document.head.appendChild(ga);
-  }
 })();
