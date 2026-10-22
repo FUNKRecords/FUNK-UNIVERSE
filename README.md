@@ -29,6 +29,14 @@ Every page pulls the same two files, so a change lands everywhere at once:
 
 Page-specific styles stay in a `<style>` block on the page itself.
 
+### "Submissions closed" screen
+
+While the label is closed, **`assets/closed.js`** covers every page with a
+full-screen "Submissions Currently Closed" notice. The pages and forms are
+untouched underneath. To reopen the site, set `var CLOSED = true;` to `false`
+at the top of that file and commit. The heading text is set by `HEADING` in
+the same file.
+
 ### Design tokens
 
 Colours, fonts and spacing come from CSS custom properties in `:root`
